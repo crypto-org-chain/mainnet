@@ -1,0 +1,17 @@
+{
+    "crypto-org-chain-mainnet-1": {
+        "version": "",
+        "binary": {
+            "linux": "",
+            "osx": "",
+            "windows": ""
+        },
+        "seeds": "",
+        "endpoint": {
+            "rpc": "",
+            "lcd": "",
+            "grpc": ""
+        },
+        "genesis_sha256sum": ""
+    }
+}
