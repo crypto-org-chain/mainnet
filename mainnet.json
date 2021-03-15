@@ -1,17 +1,30 @@
 {
     "crypto-org-chain-mainnet-1": {
-        "version": "",
-        "binary": {
-            "linux": "",
-            "osx": "",
-            "windows": ""
-        },
+        "latest_version": "",
+        "binary": [
+            {
+                "linux": {
+                    "link": "",
+                    "checksum": ""
+                },
+                "osx": {
+                    "link": "",
+                    "checksum": ""
+                },
+                "windows": {
+                    "link": "",
+                    "checksum": ""
+                },
+                "version": ""
+            }
+        ],
         "seeds": "",
         "endpoint": {
             "rpc": "",
             "lcd": "",
             "grpc": ""
         },
-        "genesis_sha256sum": ""
+        "genesis_sha256sum": "",
+        "denom": "basecro"
     }
 }
