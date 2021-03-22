@@ -22,7 +22,7 @@
         "endpoint": {
             "rpc": "https://mainnet.crypto.org:26657",
             "lcd": "https://mainnet.crypto.org:1317",
-            "grpc": "https://mainnetcrypto.org:9090"
+            "grpc": "https://mainnet.crypto.org:9090"
         },
         "genesis_sha256sum": "79b47dcd64aa4deb8405925073dc4e155f5848761389838706e69ea3eb562f34",
         "denom": "basecro"
