@@ -24,7 +24,7 @@
             "lcd": "https://mainnet.crypto.org:1317",
             "grpc": "https://mainnet.crypto.org:9090"
         },
-        "genesis_sha256sum": "79b47dcd64aa4deb8405925073dc4e155f5848761389838706e69ea3eb562f34",
+        "genesis_sha256sum": "d299dcfee6ae29ca280006eaa065799552b88b978e423f9ec3d8ab531873d882",
         "denom": "basecro"
     }
 }
