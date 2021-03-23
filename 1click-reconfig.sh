@@ -48,7 +48,10 @@ RegenerateNodeKeyJSON()
 {
     echo_s "Generate and replace node_key in $NODE_KEY_PATH\n"
     rm -f $CM_HOME/config/node_key.json
-    $CM_BINARY tendermint show-node-id --home $CM_HOME > /dev/null 2>&1
+    TEMP_DIR=$(mktemp -d)
+    $CM_BINARY init test --home $TEMP_DIR > /dev/null 2>&1
+    mv $TEMP_DIR/config/node_key.json $CM_HOME/config/node_key.json
+    rm -rf $TEMP_DIR
     ShowNodeKeyInfo
 }
 # print node_key and node_id
@@ -114,7 +117,7 @@ checkout_network()
             read -p "Do you want to enable state-sync? (Y/N): " yn
             case $yn in
                 [Yy]* ) 
-                    echo_s "State-sync require the latest version of binary to state-synce from the latest block."
+                    echo_s "State-sync require the latest version of binary to state-sync from the latest block."
                     EnableStateSync
                     CM_DESIRED_VERSION=$(curl -sS $NETWORK_JSON | jq -r ".\"$NETWORK\".latest_version")
                 ;;
