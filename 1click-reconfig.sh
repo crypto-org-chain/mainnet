@@ -80,8 +80,14 @@ EnableStateSync()
     LASTEST_HEIGHT=$(curl -s $RPC_SERVERS/block | jq -r .result.block.header.height)
     BLOCK_HEIGHT=$((LASTEST_HEIGHT - 300))
     TRUST_HASH=$(curl -s "$RPC_SERVERS/block?height=$BLOCK_HEIGHT" | jq -r .result.block_id.hash)
+    PERSISTENT_PEERS=$(curl -sS $NETWORK_JSON | jq -r ".\"$NETWORK\".persistent_peers")
+    IFS=',' read -r -a array <<< "$PERSISTENT_PEERS"
+    peer_size=${#array[@]}
+    index1=$(($RANDOM % $peer_size))
+    index2=$(($RANDOM % $peer_size))
+    PERSISTENT_PEERS="${array[$index1]},${array[$index2]}"
     sed -i "s/^\(seeds\s*=\s*\).*\$/\1\"\"/" $CM_CONFIG
-    sed -i "s/^\(persistent_peers\s*=\s*\).*\$/\1\"$SEEDS\"/" $CM_CONFIG
+    sed -i "s/^\(persistent_peers\s*=\s*\).*\$/\1\"$PERSISTENT_PEERS\"/" $CM_CONFIG
     sed -i "s/^\(trust_height\s*=\s*\).*\$/\1$BLOCK_HEIGHT/" $CM_CONFIG
     sed -i "s/^\(trust_hash\s*=\s*\).*\$/\1\"$TRUST_HASH\"/" $CM_CONFIG
     sed -i "s/^\(enable\s*=\s*\).*\$/\1true/" $CM_CONFIG
@@ -114,6 +120,8 @@ checkout_network()
                 echo_s "The genesis does not exit or the sha256sum does not match the target one. Download the target genesis from github."
                 download_genesis
             fi
+            SEEDS=$(curl -sS $NETWORK_JSON | jq -r ".\"$NETWORK\".seeds")
+            sed -i "s/^\(seeds\s*=\s*\).*\$/\1\"$SEEDS\"/" $CM_CONFIG
             read -p "Do you want to enable state-sync? (Y/N): " yn
             case $yn in
                 [Yy]* ) 
@@ -191,8 +199,6 @@ do
 
     if [[ -n "$MONIKER" ]] ; then
         sed -i "s/^\(moniker\s*=\s*\).*\$/\1\"$MONIKER\"/" $CM_CONFIG
-        SEEDS=$(curl -sS $NETWORK_JSON | jq -r ".\"$NETWORK\".seeds")
-        sed -i "s/^\(seeds\s*=\s*\).*\$/\1\"$SEEDS\"/" $CM_CONFIG
         DENOM=$(curl -sS $NETWORK_JSON | jq -r ".\"$NETWORK\".denom")
         sed -i "s/^\(\s*\[\"chain_id\",\s*\).*\$/\1\"$NETWORK\"],/" $CM_HOME/config/app.toml
         sed -i "s/^\(minimum-gas-prices\s*=\s*\"[0-9]\+\.[0-9]\+\).*\$/\1$DENOM\"/" $CM_HOME/config/app.toml
