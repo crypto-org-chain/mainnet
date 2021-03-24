@@ -120,6 +120,8 @@ checkout_network()
                 echo_s "The genesis does not exit or the sha256sum does not match the target one. Download the target genesis from github."
                 download_genesis
             fi
+            SEEDS=$(curl -sS $NETWORK_JSON | jq -r ".\"$NETWORK\".seeds")
+            sed -i "s/^\(seeds\s*=\s*\).*\$/\1\"$SEEDS\"/" $CM_CONFIG
             read -p "Do you want to enable state-sync? (Y/N): " yn
             case $yn in
                 [Yy]* ) 
@@ -197,8 +199,6 @@ do
 
     if [[ -n "$MONIKER" ]] ; then
         sed -i "s/^\(moniker\s*=\s*\).*\$/\1\"$MONIKER\"/" $CM_CONFIG
-        SEEDS=$(curl -sS $NETWORK_JSON | jq -r ".\"$NETWORK\".seeds")
-        sed -i "s/^\(seeds\s*=\s*\).*\$/\1\"$SEEDS\"/" $CM_CONFIG
         DENOM=$(curl -sS $NETWORK_JSON | jq -r ".\"$NETWORK\".denom")
         sed -i "s/^\(\s*\[\"chain_id\",\s*\).*\$/\1\"$NETWORK\"],/" $CM_HOME/config/app.toml
         sed -i "s/^\(minimum-gas-prices\s*=\s*\"[0-9]\+\.[0-9]\+\).*\$/\1$DENOM\"/" $CM_HOME/config/app.toml
