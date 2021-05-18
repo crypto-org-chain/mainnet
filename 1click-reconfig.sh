@@ -183,7 +183,7 @@ if [[ -f "$VALIDATOR_KEY" ]]; then
     read -p "❗️ $VALIDATOR_KEY already exists! Do you want to override old key? (Y/N): " yn
     case $yn in
         [Yy]* ) RegenerateValidatorKey;;
-        * )  "Keep the original priv_validator_key.json in $VALIDATOR_KEY with pubkey: \033[32m$($CM_BINARY tendermint show-validator --home $CM_HOME 2>&1)\033[0m";;
+        * ) echo_s "Keep the original priv_validator_key.json in $VALIDATOR_KEY with pubkey: \033[32m$($CM_BINARY tendermint show-validator --home $CM_HOME 2>&1)\033[0m";;
     esac
 else
     RegenerateValidatorKey
