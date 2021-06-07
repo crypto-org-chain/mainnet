@@ -24,6 +24,9 @@ If you want to enable state sync, you can add some of the following nodes to you
 - `87c3adb7d8f649c51eebe0d3335d8f9e28c362f2@seed-0.crypto.org:26656` - Crypto.org
 - `e1d7ff02b78044795371beb1cd5fb803f9389256@seed-1.crypto.org:26656` - Crypto.org
 - `2c55809558a4e491e9995962e10c026eb9014655@seed-2.crypto.org:26656` - Crypto.org 
+- `8dc1863d1d23cf9ad7cbea215c19bcbe8bf39702@p2p.baaa7e56-cc71-4ae4-b4b3-c6a9d4a9596a.cryptodotorg.bison.run:26656` - Bison Trails
+- `8a7922f3fb3fb4cfe8cb57281b9d159ca7fd29c6@p2p.aef59b2a-d77e-4922-817a-d1eea614aef4.cryptodotorg.bison.run:26656` - Bison Trails
+- `d2862ef8f86f9976daa0c6f59455b2b1452dc53b@p2p.a088961f-5dfd-4007-a15c-3a706d4be2c0.cryptodotorg.herd.run:26656` - Bison Trails
 ```
 
 ## Seed Nodes

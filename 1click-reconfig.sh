@@ -83,8 +83,9 @@ EnableStateSync()
     PERSISTENT_PEERS=$(curl -sS $NETWORK_JSON | jq -r ".\"$NETWORK\".persistent_peers")
     IFS=',' read -r -a array <<< "$PERSISTENT_PEERS"
     peer_size=${#array[@]}
-    index1=$(($RANDOM % $peer_size))
-    index2=$(($RANDOM % $peer_size))
+    index_random=$RANDOM
+    index1=$(($index_random % $peer_size))
+    index2=$((($index_random + 1) % $peer_size))
     PERSISTENT_PEERS="${array[$index1]},${array[$index2]}"
     sed -i "s/^\(seeds\s*=\s*\).*\$/\1\"\"/" $CM_CONFIG
     sed -i "s/^\(persistent_peers\s*=\s*\).*\$/\1\"$PERSISTENT_PEERS\"/" $CM_CONFIG
