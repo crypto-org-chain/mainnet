@@ -74,11 +74,15 @@ AllowGossip()
     echo_s "✅ Added public IP to external_address in chain-maind config.toml for p2p gossip\n"
     sed -i "s/^\(external_address\s*=\s*\).*\$/\1\"$IP:26656\"/" $CM_CONFIG
 }
+round()
+{ 
+    awk -v n=$1 -v d=$2 'BEGIN{print int(n/d) * d}'
+}
 EnableStateSync()
 {
     RPC_SERVERS=$(curl -sS $NETWORK_JSON | jq -r ".\"$NETWORK\".endpoint.rpc")
     LASTEST_HEIGHT=$(curl -s $RPC_SERVERS/block | jq -r .result.block.header.height)
-    BLOCK_HEIGHT=$((LASTEST_HEIGHT - 300))
+    BLOCK_HEIGHT=$(round $(($LASTEST_HEIGHT - 1000)) 1000)
     TRUST_HASH=$(curl -s "$RPC_SERVERS/block?height=$BLOCK_HEIGHT" | jq -r .result.block_id.hash)
     PERSISTENT_PEERS=$(curl -sS $NETWORK_JSON | jq -r ".\"$NETWORK\".persistent_peers")
     IFS=',' read -r -a array <<< "$PERSISTENT_PEERS"
