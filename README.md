@@ -11,7 +11,7 @@ To get started with the mainnet, see the
 ## Mainnet Status
 
 
-- *March 25, 2020 01:00:00 UTC* - [crypto-org-chain-mainnet-1](./crypto-org-chain-mainnet-1)
+- *March 25, 2021 01:00:00 UTC* - [crypto-org-chain-mainnet-1](./crypto-org-chain-mainnet-1)
 
 [mainnet.json](./mainnet.json) lists the mainnet information.
 
