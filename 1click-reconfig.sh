@@ -179,7 +179,7 @@ echo_s "Reset chain-maind and remove data if any"
 if [[ -d "$CM_HOME/data" ]]; then
     read -p '❗️ Enter (Y/N) to confirm to delete any old data: ' yn
     case $yn in
-        [Yy]* ) StopService; $CM_BINARY tendermint unsafe-reset-all --home $CM_HOME;; $CM_BINARY tendermint reset-state --home $CM_HOME;;
+        [Yy]* ) StopService; $CM_BINARY tendermint unsafe-reset-all --home $CM_HOME; $CM_BINARY tendermint reset-state --home $CM_HOME;;
         * ) echo_s "Not delete and exit\n"; exit 0;;
     esac
 fi
