@@ -13,7 +13,9 @@ download_binary()
     echo_s "💾 Downloading $NETWORK binary"
     TEMP_DIR="$(mktemp -d)"
     curl -LJ $(curl -sS $NETWORK_JSON | jq -r ".\"$NETWORK\".binary | .[] | select(.version==\"$CM_DESIRED_VERSION\").linux.link") -o $TEMP_DIR/chain-maind.tar.gz
+    echo_s "print the checksum:$CM_DESIRED_VERSION"
     CHECKSUM=$(curl -sS $NETWORK_JSON | jq -r ".\"$NETWORK\".binary | .[] | select(.version==\"$CM_DESIRED_VERSION\").linux.checksum")
+    echo "print the checksum: $CHECKSUM"
     if (! echo "$CHECKSUM $TEMP_DIR/chain-maind.tar.gz" | sha256sum -c --status --quiet - > /dev/null 2>&1) ; then
         echo_s "The checksum does not match the target downloaded file! Something wrong from download source, please try again or create an issue for it."
         exit 1
@@ -177,7 +179,7 @@ echo_s "Reset chain-maind and remove data if any"
 if [[ -d "$CM_HOME/data" ]]; then
     read -p '❗️ Enter (Y/N) to confirm to delete any old data: ' yn
     case $yn in
-        [Yy]* ) StopService; $CM_BINARY unsafe-reset-all --home $CM_HOME;;
+        [Yy]* ) StopService; $CM_BINARY tendermint unsafe-reset-all --home $CM_HOME; $CM_BINARY tendermint reset-state --home $CM_HOME;;
         * ) echo_s "Not delete and exit\n"; exit 0;;
     esac
 fi
